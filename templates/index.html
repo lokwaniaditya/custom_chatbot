@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css')}}" />
+    <title>Enter</title>
+  </head>
+  <body>
+    <form action="/" method="POST" id="user_entry">
+      <div id="form_div">
+        <p style="color: white; font-size: 28px; font-family: 'Courier New', Courier, monospace; margin-bottom: 40px;">What do you want the Chatbot to specialize in?</p>
+        <div class="container">
+          <input required="" type="text" name="user_entry" class="input">
+          <label class="label">Enter your prompt</label>
+        </div>
+        <button type="submit" class="button">Submit</button>
+      </div>
+    </form>
+  </body>
+</html>
