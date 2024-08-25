@@ -14,7 +14,7 @@ Or download the zip folder<br/>
 
 Install the requirements:
 
-'''
+```
 pip install -r requirements.txt
 ```
 
