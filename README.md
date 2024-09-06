@@ -1,7 +1,7 @@
 <h1>Make your own custom ChatBot</h1>
 <h2>Overview</h2>
 Make your own custom chatbot that answers questions related to a specific topic only within a matter of few seconds by typing in the topic you want your chatbot to specialize in. This works by customizing the system 
-prompt tailored to the user's need and then leveraging the GPT-4o LLM - This application runs on flask development server with interactive UI. <br/>
+prompt tailored to the user's need and then leveraging the pwoer of GPT-4o Language Model - The chatbot uses LangChain Framework - This application runs on flask development server with interactive UI. <br/>
 
 <h2>Installation</h2>
 Clone the github repository
