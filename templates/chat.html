@@ -24,44 +24,10 @@
 
     /* Add overflow-y: auto for scrolling */
     #messageFormeight {
+      background-color: #222222;
       overflow-y: auto;
       height: 400px; /* Adjust height as needed */
       position: relative;
-    }
-
-    /* Loading animation - hidden initially */
-    #loading {
-      display: none;
-      margin-left: auto;
-      margin-right: auto;
-      margin-bottom: 7px;
-      width: 60px;
-      aspect-ratio: 2;
-      --_g: no-repeat radial-gradient(circle closest-side, #181a1d 70%, #0000);
-      background:
-        var(--_g) 0% 50%,
-        var(--_g) 50% 50%,
-        var(--_g) 100% 50%;
-      background-size: calc(100%/3) 50%;
-      animation: l3 1s infinite linear;
-    }
-
-    @keyframes l3 {
-      20% {
-        background-position: 0% 0%, 50% 50%, 100% 50%
-      }
-
-      40% {
-        background-position: 0% 100%, 50% 0%, 100% 50%
-      }
-
-      60% {
-        background-position: 0% 50%, 50% 100%, 100% 0%
-      }
-
-      80% {
-        background-position: 0% 50%, 50% 50%, 100% 100%
-      }
     }
 
     .msg_cotainer_send {
@@ -76,8 +42,9 @@
     }
 
     .msg_cotainer {
-      background-color: #f1f0f0;
-      color: black;
+      background-color: #a461ae;
+      color: white;
+      font-family: 'Courier New', Courier, monospace;
       border-radius: 10px;
       padding: 10px;
       margin: 10px;
@@ -121,16 +88,19 @@
 </head>
 
 <body style="background-color: #222222;">
-  <button type="button" class="btn btn-dark chat-btn btn-lg" style="position: fixed; bottom: 21px; right: 21px;">
-    <i class="fas fa-comment" style="color: #7d2ae8;"></i>
-  </button>
+  <div id="chat_container">
+    <img id='arrow-img' class="fade-in" src= "{{ url_for('static', filename='images/curved_arrow.png')}}">
+    <button type="button" class="btn btn-dark chat-btn btn-lg" style="height: 55px; margin: 8px;">
+      <i class="fas fa-comment" style="color: #a461ae;"></i>
+    </button>
+  </div>
 
   <div class="col-md-8 col-xl-6 chat">
     <div class="card">
-      <div class="card-header msg_head" style="background-color: #181a1d;">
+      <div class="card-header msg_head" style="background-color: #222222;">
         <div class="d-flex bd-highlight">
           <div class="user_info">
-            <span style="color: white; font-weight: bold;">ChatBot</span>
+            <span style="color: white; font-weight: bold; font-family: 'Courier New', Courier, monospace">ChatBot</span>
 
           </div>
           <button type="button" class="close btn-close-white"
@@ -146,14 +116,14 @@
         </div>
       </div>
 
-      <div class="card-footer" style="border-radius: 10px;">
-        <div id="loading"></div>
+      <div class="card-footer" style="background-color: #222222;">
+        <div id="loader"></div>
         <form id="messageArea" class="input-group">
           <input type="text" id="text" name="msg" placeholder="Type your query..." autocomplete="off"
-            class="form-control type_msg" required>
+            class="form-control type_msg" style="color: #222222;" required>
           <div class="input-group-append">
-            <button type="submit" id="send" class="input-group-text send_btn"><i
-                class="fas fa-location-arrow"></i></button>
+            <button type="submit" id="send" class="input-group-text send_btn" style="background-color: #a461ae;"><i
+                class="fas fa-location-arrow" style="color: white;"></i></button>
           </div>
         </form>
       </div>
@@ -171,7 +141,8 @@
       // Open chat window on button click
       $('.chat-btn').click(function () {
         $('.chat').show(500);
-        $('.chat-btn').hide()
+        $('.chat-btn').hide();
+        $('#arrow-img').hide(300);
         scrollToBottom();
         $("#text").focus();  // Set focus to the input field
       });
@@ -179,7 +150,8 @@
       // Close chat window on close button click
       $('.close').click(function () {
         $('.chat').hide(500);
-        $('.chat-btn').show()
+        $('.chat-btn').show();
+        $('#arrow-img').show(500);
       });
 
       // Handle sample message clicks
@@ -206,17 +178,15 @@
         $("#text").val("");
         $("#messageFormeight").append(userHtml);
         scrollToBottom();
-        $("#loading").show();
+        $("#loader").show();
         $("#send").attr("disabled", true);
-        $("#messageFormeight").addClass("transparent-text");
 
         $.ajax({
           data: { msg: rawText },
           type: "POST",
           url: "/get", // Replace with your actual endpoint
         }).done(function (data) {
-          $("#loading").hide();
-          $("#messageFormeight").removeClass("transparent-text");
+          $("#loader").hide();
           var botHtml = '<div class="msg_cotainer">' + data + '</div>';
           $("#messageFormeight").append($.parseHTML(botHtml));
           $("#send").attr("disabled", false);
